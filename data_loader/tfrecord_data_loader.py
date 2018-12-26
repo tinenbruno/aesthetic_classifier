@@ -16,20 +16,21 @@ class TfrecordDataLoader(BaseDataLoader):
     def _parse_function(self, proto):
         # define your tfrecord again. Remember that you saved your image as a string.
         keys_to_features = {
-            'image': tf.FixedLenFeature([], tf.string),
-            "label": tf.FixedLenFeature([], tf.int64)
+            'train/image': tf.FixedLenFeature([], tf.string),
+            "train/label": tf.FixedLenFeature([], tf.int64)
         }
         
         # Load one example
         parsed_features = tf.parse_single_example(proto, keys_to_features)
         
         # Turn your saved image string into an array
-        parsed_features['image'] = tf.decode_raw(
-            parsed_features['image'],
-            tf.uint8
-        )
-        
-        return parsed_features['image'], parsed_features["label"]
+
+        image = tf.image.decode_jpeg(parsed_features['train/image'], channels = 3)
+        image = tf.image.resize_image_with_crop_or_pad(image, 200, 200)
+        image  = tf.cast(image, tf.float32) * (1. / 255) - 0.5
+        image.set_shape((200, 200, 3))
+
+        return image, parsed_features["train/label"]
 
     def _create_dataset(self, filepath, config):
         
