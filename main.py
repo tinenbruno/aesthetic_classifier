@@ -1,6 +1,6 @@
 from data_loader.tfrecord_data_loader import TfrecordDataLoader
 from models.conv_aesthetic_model import ConvAestheticModel
-from trainers.conv_aesthetic_trainer import ConvAestheticTrainer
+from trainers.conv_aesthetic_trainer import ConvAestheticModelTrainer
 from utils.config import process_config
 from utils.dirs import create_dirs
 from utils.utils import get_args
@@ -25,7 +25,7 @@ def main():
     model = ConvAestheticModel(config)
 
     print('Create the trainer')
-    trainer = ConvAestheticTrainer(model.model, data_loader.get_train_data(), config)
+    trainer = ConvAestheticModelTrainer(model.model, data_loader.get_train_data(), config)
 
     print('Start training the model.')
     trainer.train()
