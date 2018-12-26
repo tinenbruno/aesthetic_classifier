@@ -44,8 +44,7 @@ class ConvAestheticModelTrainer(BaseTrain):
             self.data[0], self.data[1],
             epochs=self.config.trainer.num_epochs,
             verbose=self.config.trainer.verbose_training,
-            batch_size=self.config.trainer.batch_size,
-            validation_split=self.config.trainer.validation_split,
+            steps_per_epoch=100,
             callbacks=self.callbacks,
         )
         self.loss.extend(history.history['loss'])

@@ -37,6 +37,6 @@ class ConvAestheticModel(BaseModel):
         self.model.add(Dense(2, activation='softmax'))
 
         self.model.compile(
-              loss='sparse_categorical_crossentropy',
+              loss='categorical_crossentropy',
               optimizer=self.config.model.optimizer,
               metrics=['accuracy'])

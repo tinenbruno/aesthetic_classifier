@@ -1,3 +1,4 @@
+import comet_ml
 from data_loader.tfrecord_data_loader import TfrecordDataLoader
 from models.conv_aesthetic_model import ConvAestheticModel
 from trainers.conv_aesthetic_trainer import ConvAestheticModelTrainer
