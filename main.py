@@ -1,6 +1,6 @@
-from data_loader.simple_mnist_data_loader import SimpleMnistDataLoader
-from models.simple_mnist_model import SimpleMnistModel
-from trainers.simple_mnist_trainer import SimpleMnistModelTrainer
+from data_loader.tfrecord_data_loader import TfrecordDataLoader
+from models.conv_aesthetic_model import ConvAestheticModel
+from trainers.conv_aesthetic_trainer import ConvAestheticTrainer
 from utils.config import process_config
 from utils.dirs import create_dirs
 from utils.utils import get_args
@@ -19,13 +19,13 @@ def main():
     create_dirs([config.callbacks.tensorboard_log_dir, config.callbacks.checkpoint_dir])
 
     print('Create the data generator.')
-    data_loader = SimpleMnistDataLoader(config)
+    data_loader = TfrecordDataLoader(config)
 
     print('Create the model.')
-    model = SimpleMnistModel(config)
+    model = ConvAestheticModel(config)
 
     print('Create the trainer')
-    trainer = SimpleMnistModelTrainer(model.model, data_loader.get_train_data(), config)
+    trainer = ConvAestheticTrainer(model.model, data_loader.get_train_data(), config)
 
     print('Start training the model.')
     trainer.train()

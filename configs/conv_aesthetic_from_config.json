@@ -1,0 +1,31 @@
+{
+    "exp": {
+        "name": "conv_aesthetic"
+    },
+    "model": {
+        "learning_rate": 0.001,
+        "optimizer": "adam"
+    },
+    "loader": {
+        "training_records": [],
+        "test_records": [],
+        "shuffle_buffer": 20,
+        "batch_size": 64,
+        "num_classes": 2,
+        "image_size": [-1, 256, 256, 3]
+    },
+    "trainer":{
+        "num_epochs": 20,
+        "batch_size": 64,
+        "validation_split":0.25,
+        "verbose_training": true
+    },
+    "callbacks": {
+        "checkpoint_monitor": "val_loss",
+        "checkpoint_mode": "min",
+        "checkpoint_save_best_only": true,
+        "checkpoint_save_weights_only": true,
+        "checkpoint_verbose": true,
+        "tensorboard_write_graph": true
+    }
+}

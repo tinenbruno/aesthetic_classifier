@@ -1,6 +1,6 @@
-﻿# Keras Project Template [![CometML](https://img.shields.io/badge/comet.ml-track-brightgreen.svg)](https://www.comet.ml)
+﻿# Aesthetic Classifier With Keras
 
-A project template to simplify building and training deep learning models using Keras.
+Aesthetic Classifier with keras built upon [Ahmkel/Keras-Project-Template](https://github.com/Ahmkel/Keras-Project-Template).
 
 # Table of contents
 
