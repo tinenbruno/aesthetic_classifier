@@ -7,10 +7,11 @@
         "optimizer": "adam"
     },
     "loader": {
-        "training_records": [],
+        "training_records": ["E:\\Documentos\\Projetos\\keras_aesthetic\\ava.tfrecord"],
+        "val_records": ["E:\\Documentos\\Projetos\\keras_aesthetic\\ava_val.tfrecord"],
         "test_records": [],
-        "shuffle_buffer": 20,
-        "batch_size": 64,
+        "shuffle_buffer": 1,
+        "batch_size": 1,
         "num_classes": 2,
         "image_size": [-1, 256, 256, 3]
     },

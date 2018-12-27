@@ -5,6 +5,7 @@ from trainers.conv_aesthetic_trainer import ConvAestheticModelTrainer
 from utils.config import process_config
 from utils.dirs import create_dirs
 from utils.utils import get_args
+import os
 
 def main():
     # capture the config path from the run arguments
@@ -26,7 +27,7 @@ def main():
     model = ConvAestheticModel(config)
 
     print('Create the trainer')
-    trainer = ConvAestheticModelTrainer(model.model, data_loader.get_train_data(), config)
+    trainer = ConvAestheticModelTrainer(model.model, data_loader.get_train_data(), data_loader.get_val_data(), config)
 
     print('Start training the model.')
     trainer.train()

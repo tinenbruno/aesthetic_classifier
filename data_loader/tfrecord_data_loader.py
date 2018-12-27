@@ -6,12 +6,16 @@ class TfrecordDataLoader(BaseDataLoader):
         super(TfrecordDataLoader, self).__init__(config)
         (self.image_train, self.label_train) = self._create_dataset(config.loader.training_records, config)
         (self.image_test, self.label_test) = self._create_dataset(config.loader.test_records, config)
+        (self.image_val, self.label_val) = self._create_dataset(config.loader.val_records, config)
 
     def get_train_data(self):
         return self.image_train, self.label_train
     
     def get_test_data(self):
         return self.image_test, self.label_test
+    
+    def get_val_data(self):
+        return self.image_val, self.label_val
         
     def _parse_function(self, proto):
         # define your tfrecord again. Remember that you saved your image as a string.
@@ -26,9 +30,9 @@ class TfrecordDataLoader(BaseDataLoader):
         # Turn your saved image string into an array
 
         image = tf.image.decode_jpeg(parsed_features['train/image'], channels = 3)
-        image = tf.image.resize_image_with_crop_or_pad(image, 200, 200)
+        image = tf.image.resize_image_with_crop_or_pad(image, 256, 256)
         image  = tf.cast(image, tf.float32) * (1. / 255) - 0.5
-        image.set_shape((200, 200, 3))
+        image.set_shape((256, 256, 3))
 
         return image, parsed_features["train/label"]
 
