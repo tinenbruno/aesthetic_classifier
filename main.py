@@ -2,6 +2,7 @@ import comet_ml
 from data_loader.tfrecord_data_loader import TfrecordDataLoader
 from models.conv_aesthetic_model import ConvAestheticModel
 from trainers.conv_aesthetic_trainer import ConvAestheticModelTrainer
+from models.resnet import ResnetBuilder
 from utils.config import process_config
 from utils.dirs import create_dirs
 from utils.utils import get_args
@@ -24,10 +25,15 @@ def main():
     data_loader = TfrecordDataLoader(config)
 
     print('Create the model.')
-    model = ConvAestheticModel(config)
-
+    #model = ConvAestheticModel(config)
+    model = ResnetBuilder.build_resnet_18((256, 256, 3), 2)
+    model.compile(
+        loss='categorical_crossentropy',
+        optimizer='adam',
+        metrics=['accuracy']
+    )
     print('Create the trainer')
-    trainer = ConvAestheticModelTrainer(model.model, data_loader.get_train_data(), data_loader.get_val_data(), config)
+    trainer = ConvAestheticModelTrainer(model, data_loader.get_train_data(), data_loader.get_val_data(), config)
 
     print('Start training the model.')
     trainer.train()
