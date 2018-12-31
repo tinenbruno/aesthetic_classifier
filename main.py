@@ -6,6 +6,7 @@ from models.resnet import ResnetBuilder
 from utils.config import process_config
 from utils.dirs import create_dirs
 from utils.utils import get_args
+from tensorflow.keras.optimizer import adam
 import os
 
 def main():
@@ -29,7 +30,7 @@ def main():
     model = ResnetBuilder.build_resnet_18((256, 256, 3), 2)
     model.compile(
         loss='categorical_crossentropy',
-        optimizer='adam',
+        optimizer=adam(amsgrad=True),
         metrics=['accuracy']
     )
     print('Create the trainer')
