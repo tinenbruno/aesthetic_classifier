@@ -1,6 +1,7 @@
 from base.base_trainer import BaseTrain
 import os
 from tensorflow.keras.callbacks import ModelCheckpoint, TensorBoard
+from tensorflow.keras.optimizers import Adam
 
 
 class ConvAestheticModelTrainer(BaseTrain):
@@ -36,6 +37,7 @@ class ConvAestheticModelTrainer(BaseTrain):
         if hasattr(self.config,"comet_api_key"):
             from comet_ml import Experiment
             experiment = Experiment(api_key=self.config.comet_api_key, project_name=self.config.exp_name)
+            experiment.add_tags(self.config.tags)
             experiment.disable_mp()
             experiment.log_parameters(self.config)
             self.callbacks.append(experiment.get_keras_callback())
@@ -44,14 +46,37 @@ class ConvAestheticModelTrainer(BaseTrain):
 
         history = self.model.fit(
             self.data[0], self.data[1],
-            epochs=self.config.trainer.num_epochs,
+            epochs=2,
             verbose=self.config.trainer.verbose_training,
-            steps_per_epoch=25000,
+            steps_per_epoch=1360,
             callbacks=self.callbacks,
             validation_data=(self.val_data[0], self.val_data[1]),
-            validation_steps=500
+            validation_steps=34
         )
         self.loss.extend(history.history['loss'])
         self.acc.extend(history.history['acc'])
         self.val_loss.extend(history.history['val_loss'])
         self.val_acc.extend(history.history['val_acc'])
+
+        for layer in self.model.layers[:-1]:
+            layer.trainable = True
+        
+        self.model.compile(loss='categorical_hinge',optimizer=Adam(lr=0.0003, decay=0.003), metrics=['accuracy'])
+
+        history = self.model.fit(
+            self.data[0], self.data[1],
+            epochs=self.config.trainer.num_epochs,
+            verbose=self.config.trainer.verbose_training,
+            steps_per_epoch=1360,
+            callbacks=self.callbacks,
+            validation_data=(self.val_data[0], self.val_data[1]),
+            validation_steps=34
+        )
+        self.loss.extend(history.history['loss'])
+        self.acc.extend(history.history['acc'])
+        self.val_loss.extend(history.history['val_loss'])
+        self.val_acc.extend(history.history['val_acc'])
+
+        loss, acc = self.model.evaluate(x=self.val_data[0], y=self.val_data[1], steps=34)
+        print(loss)
+        print(acc)

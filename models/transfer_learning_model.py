@@ -3,6 +3,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.applications import ResNet50
 from tensorflow.keras.layers import Input, Dense, Conv2D, MaxPooling2D, BatchNormalization, Dropout, Flatten
 from tensorflow.keras.regularizers import l2
+from tensorflow.keras.optimizers import Adam
 
 
 class TransferLearningModel(BaseModel):
@@ -11,15 +12,18 @@ class TransferLearningModel(BaseModel):
         self._build_transfer_learning_model()
 
     def _build_transfer_learning_model(self):
-        input = Input(shape=(256, 256, 3))
-        self.model = ResNet50(weights='imagenet', input_tensor=input, include_top=False, input_shape=(256, 256, 3))
+        input = Input(shape=(224, 224, 3))
+        self.model = ResNet50(weights='imagenet', input_tensor=input, include_top=False, input_shape=(224, 224, 3))
 
         last_layer = self.model.output
-        x= Flatten(name='flatten')(last_layer)
+        dropout = Dropout(0.5)(last_layer)
+        x= Flatten(name='flatten')(dropout)
+        # x = Dense(1000, activation='softmax')(x)
         out=Dense(
             2, 
             activation='linear', 
             kernel_regularizer=l2(0.01), 
+            bias_regularizer=l2(0.01), 
             name='output_layer'
             )(x)
 
@@ -28,4 +32,5 @@ class TransferLearningModel(BaseModel):
             layer.trainable = False
 
         self.model.layers[-1].trainable
-        self.model.compile(loss='categorical_hinge',optimizer='adadelta',metrics=['accuracy'])
+        # self.model.layers[-2].trainable
+        self.model.compile(loss='categorical_hinge',optimizer=Adam(lr=0.0005, decay=0.003), metrics=['accuracy'])

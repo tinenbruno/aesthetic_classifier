@@ -1,24 +1,37 @@
 {
     "exp": {
-        "name": "conv_aesthetic"
+        "name": "conv_aesthetic_resnet18"
     },
     "model": {
-        "learning_rate": 0.001,
+        "learning_rate": 0.0001,
         "optimizer": "adam"
     },
     "loader": {
-        "training_records": ["E:\\Documentos\\Projetos\\keras_aesthetic\\ava.tfrecord"],
-        "val_records": ["E:\\Documentos\\Projetos\\keras_aesthetic\\ava_val.tfrecord"],
-        "test_records": [],
-        "shuffle_buffer": 1,
-        "batch_size": 1,
+        "training_records": [
+	    "/home/tinen_bruno/model/ava-full-top-224/ava_training_01of04.tfrecord",
+	    "/home/tinen_bruno/model/ava-full-top-224/ava_training_02of04.tfrecord",
+	    "/home/tinen_bruno/model/ava-full-top-224/ava_training_03of04.tfrecord",
+	    "/home/tinen_bruno/model/ava-full-top-224/ava_training_04of04.tfrecord"
+	],
+        "val_records": [
+	    "/home/tinen_bruno/model/ava-full-top-224/ava_dev_01of04.tfrecord",
+	    "/home/tinen_bruno/model/ava-full-top-224/ava_dev_02of04.tfrecord",
+	    "/home/tinen_bruno/model/ava-full-top-224/ava_dev_03of04.tfrecord",
+	    "/home/tinen_bruno/model/ava-full-top-224/ava_dev_04of04.tfrecord"
+	],
+        "test_records": [
+	    "/home/tinen_bruno/model/ava-full-top-224/ava_test_01of04.tfrecord",
+	    "/home/tinen_bruno/model/ava-full-top-224/ava_test_02of04.tfrecord",
+	    "/home/tinen_bruno/model/ava-full-top-224/ava_test_03of04.tfrecord",
+	    "/home/tinen_bruno/model/ava-full-top-224/ava_test_04of04.tfrecord"
+	],
+        "shuffle_buffer": 100,
+        "batch_size": 50,
         "num_classes": 2,
-        "image_size": [-1, 256, 256, 3]
+        "image_size": [-1, 224, 224, 3]
     },
     "trainer":{
         "num_epochs": 20,
-        "batch_size": 64,
-        "validation_split":0.25,
         "verbose_training": true
     },
     "callbacks": {
@@ -27,6 +40,9 @@
         "checkpoint_save_best_only": true,
         "checkpoint_save_weights_only": true,
         "checkpoint_verbose": true,
-        "tensorboard_write_graph": true
-    }
+        "tensorboard_write_graph": true,
+	"checkpoint_dir": "/home/tinen_bruno/model"
+    },
+    "exp_name": "aesthetic",
+    "tags": ["resnet50", "hinge", "transfer"]
 }

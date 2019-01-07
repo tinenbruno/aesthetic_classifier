@@ -57,6 +57,9 @@ def _bn_relu_conv(**conv_params):
 
     def f(input):
         activation = _bn_relu(input)
+        print("input")
+        print(input)
+        print(activation)
         return Conv2D(filters=filters, kernel_size=kernel_size,
                       strides=strides, padding=padding,
                       kernel_initializer=kernel_initializer,
@@ -78,8 +81,12 @@ def _shortcut(input, residual):
     equal_channels = input_shape[CHANNEL_AXIS] == residual_shape[CHANNEL_AXIS]
 
     shortcut = input
+    print(shortcut)
+    print(stride_height)
     # 1 X 1 conv if shape is different. Else identity.
     if stride_width > 1 or stride_height > 1 or not equal_channels:
+        print(stride_width)
+        print(stride_height)
         shortcut = Conv2D(filters=residual_shape[CHANNEL_AXIS],
                           kernel_size=(1, 1),
                           strides=(stride_width, stride_height),
@@ -215,7 +222,7 @@ class ResnetBuilder(object):
                                  strides=(1, 1))(block)
         flatten1 = Flatten()(pool2)
         dense = Dense(units=num_outputs, kernel_initializer="he_normal",
-                      activation="softmax")(flatten1)
+                      activation="hard_sigmoid")(flatten1)
 
         model = Model(inputs=input, outputs=dense)
         return model

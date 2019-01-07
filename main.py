@@ -9,6 +9,8 @@ from utils.dirs import create_dirs
 from utils.utils import get_args
 from tensorflow.keras.optimizers import Adam
 import os
+from tensorflow.keras.layers import Input, Dense, Conv2D, MaxPooling2D, BatchNormalization, Dropout, Flatten
+from tensorflow.keras.models import Model
 
 def main():
     # capture the config path from the run arguments
@@ -29,9 +31,15 @@ def main():
     print('Create the model.')
     #model = ConvAestheticModel(config)
     model = TransferLearningModel(config)
+    #model = ResnetBuilder.build_resnet_18((256, 256, 3), 2)
+    #model.compile(
+    #    loss='hinge',
+    #    optimizer=Adam(amsgrad=True, lr=0.0005),
+    #    metrics=['accuracy']
+    #)
     print('Create the trainer')
     
-    trainer = ConvAestheticModelTrainer(model.model, data_loader.get_train_data(), data_loader.get_val_data(), config)
+    trainer = ConvAestheticModelTrainer(model.model, data_loader.get_train_data(), data_loader.get_test_data(), config)
 
     print('Start training the model.')
     trainer.train()

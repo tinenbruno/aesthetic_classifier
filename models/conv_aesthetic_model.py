@@ -1,6 +1,7 @@
 from base.base_model import BaseModel
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Input, Dense, Conv2D, MaxPooling2D, BatchNormalization, Dropout, Flatten
+from tensorflow.keras.regularizers import l2
 
 class ConvAestheticModel(BaseModel):
     def __init__(self, config):
@@ -40,12 +41,12 @@ class ConvAestheticModel(BaseModel):
         self.model.add(Dense(4096, activation='relu'))
         self.model.add(Dense(1000, activation='relu'))
 
-        self.model.add(Dense(2, activation='softmax'))
+        self.model.add(Dense(2, activation='linear', kernel_regularizer=l2(0.01)))
 
         self.model.compile(
-            loss='categorical_hinge',
+            loss='hinge',
             optimizer=self.config.model.optimizer,
-            metrics=['categorical_accuracy'],
+            metrics=['accuracy'],
         )
 
 

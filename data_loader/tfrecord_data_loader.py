@@ -30,9 +30,9 @@ class TfrecordDataLoader(BaseDataLoader):
         # Turn your saved image string into an array
 
         image = tf.image.decode_jpeg(parsed_features['train/image'], channels = 3)
-        image = tf.image.resize_image_with_crop_or_pad(image, 256, 256)
+        image = tf.image.resize_image_with_crop_or_pad(image, 224, 224)
         image  = tf.cast(image, tf.float32) * (1. / 255) - 0.5
-        image.set_shape((256, 256, 3))
+        image.set_shape((224, 224, 3))
 
         return image, parsed_features["train/label"]
 
