@@ -41,8 +41,10 @@
         "checkpoint_save_weights_only": true,
         "checkpoint_verbose": true,
         "tensorboard_write_graph": true,
-	"checkpoint_dir": "/home/tinen_bruno/model"
+        "checkpoint_dir": "/home/tinen_bruno/model"
     },
     "exp_name": "aesthetic",
-    "tags": ["resnet50", "hinge", "transfer"]
+    "comet_api_key": "AC9vyyqzpbe5KlnNtndqRb6GU",
+    "tags": ["resnet50", "hinge", "transfer"],
+    "checkpoint_dir": "/home/tinen_bruno/aesthetic_classifier/experiments/2019-01-07/conv_aesthetic_resnet18/checkpoints"
 }

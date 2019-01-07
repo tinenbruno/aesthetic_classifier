@@ -24,5 +24,7 @@
    "checkpoint_save_weights_only": true,
     "checkpoint_verbose": true,
     "tensorboard_write_graph": true
-  }
+  },
+  "comet_api_key": "AC9vyyqzpbe5KlnNtndqRb6GU",
+  "exp_name": "general"
 }

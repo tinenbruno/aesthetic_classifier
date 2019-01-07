@@ -22,6 +22,8 @@ def main():
         print("missing or invalid arguments")
         exit(0)
 
+    os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+
     # create the experiments dirs
     create_dirs([config.callbacks.tensorboard_log_dir, config.callbacks.checkpoint_dir])
 
