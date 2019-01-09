@@ -1,6 +1,6 @@
 from base.base_model import BaseModel
 from tensorflow.keras.models import Model
-from tensorflow.keras.applications import ResNet50, VGG16
+from tensorflow.keras.applications import ResNet50, VGG16, MobileNet
 from tensorflow.keras.layers import Input, Dense, Conv2D, MaxPooling2D, BatchNormalization, Dropout, Flatten
 from tensorflow.keras.regularizers import l2
 from tensorflow.keras.optimizers import Adam
@@ -13,7 +13,7 @@ class TransferLearningModel(BaseModel):
 
     def _build_transfer_learning_model(self):
         input = Input(shape=(224, 224, 3))
-        self.model = VGG16(weights='imagenet', input_tensor=input, include_top=False, input_shape=(224, 224, 3))
+        self.model = MobileNet(weights='imagenet', input_tensor=input, include_top=False, input_shape=(224, 224, 3))
 
         last_layer = self.model.output
         dropout = Dropout(0.5)(last_layer)
