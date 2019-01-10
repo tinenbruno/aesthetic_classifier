@@ -1,6 +1,6 @@
 {
     "exp": {
-        "name": "conv_aesthetic_mobilenet"
+        "name": "conv_aesthetic_mobilenetv2"
     },
     "model": {
         "learning_rate": 0.0001,
@@ -45,6 +45,6 @@
     },
     "comet_api_key": "AC9vyyqzpbe5KlnNtndqRb6GU",
     "exp_name": "aesthetic",
-    "tags": ["mobilenet", "hinge", "transfer"],
+    "tags": ["mobilenetv2", "hinge", "transfer"],
     "checkpoint_dir": "/home/tinen_bruno/aesthetic_classifier/experiments/2019-01-07/conv_aesthetic_resnet18/checkpoints"
 }
