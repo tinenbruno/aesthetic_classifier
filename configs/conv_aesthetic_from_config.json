@@ -1,6 +1,6 @@
 {
     "exp": {
-        "name": "conv_aesthetic_mobilenetv2"
+        "name": "conv_aesthetic_inceptionV2resnet"
     },
     "model": {
         "learning_rate": 0.0001,
@@ -45,6 +45,6 @@
     },
     "comet_api_key": "AC9vyyqzpbe5KlnNtndqRb6GU",
     "exp_name": "aesthetic",
-    "tags": ["mobilenetv2", "hinge", "transfer"],
-    "checkpoint_dir": "/home/tinen_bruno/aesthetic_classifier/experiments/2019-01-07/conv_aesthetic_resnet18/checkpoints"
+    "tags": ["inceptionv2resnet", "hinge", "transfer"],
+    "checkpoint_dir": "/home/tinen_bruno/aesthetic_classifier/experiments/2019-01-13/conv_aesthetic_nasnetmobile/checkpoints/"
 }

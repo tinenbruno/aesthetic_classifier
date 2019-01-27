@@ -12,16 +12,28 @@ def possible_positives(y_true, y_pred):
 
 
 def true_positive(y_true, y_pred):
-    return K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+    class_id_true = K.argmax(y_true, axis=-1)
+    class_id_preds = K.argmax(y_pred, axis=-1)
+    # Replace class_id_preds with class_id_true for recall here
+    return K.sum(class_id_true * class_id_preds) 
 
 def false_positive(y_true, y_pred):
-    return K.sum(K.round(K.clip((1 - y_true) * y_pred, 0, 1)))
+    class_id_true = K.argmax(y_true, axis=-1)
+    class_id_preds = K.argmax(y_pred, axis=-1)
+    # Replace class_id_preds with class_id_true for recall here
+    return K.sum((1 - class_id_true) * class_id_preds) 
 
 def false_negative(y_true, y_pred):
-    return K.sum(K.round(K.clip((y_true) * (1 - y_pred), 0, 1)))
+    class_id_true = K.argmax(y_true, axis=-1)
+    class_id_preds = K.argmax(y_pred, axis=-1)
+    # Replace class_id_preds with class_id_true for recall here
+    return K.sum(class_id_true * (1 - class_id_preds)) 
 
 def true_negative(y_true, y_pred):
-    return K.sum(K.round(K.clip((1 - y_true) * (1 - y_pred), 0, 1)))
+    class_id_true = K.argmax(y_true, axis=-1)
+    class_id_preds = K.argmax(y_pred, axis=-1)
+    # Replace class_id_preds with class_id_true for recall here
+    return K.sum((1 - class_id_true) * (1 - class_id_preds)) 
 
 def categorical_accuracy(y_true, y_pred):
     '''Calculates the mean accuracy rate across all predictions for
@@ -99,9 +111,10 @@ def main():
 
     latest = latest_checkpoint(config.checkpoint_dir)
     model.load_weights(latest)
-    loss, *metrics = model.evaluate(x=x, y=y, steps=1)
-    print(loss)
-    print(*metrics)
+    loss, *metrics = model.evaluate(x=x, y=y, steps=100)
+
+    model.summary()
+    print("accuracy: {}, recall: {}, precision: {}, specificity: {}, true_positive: {}, false_positive: {}, false_negative: {}, true_negative: {}, categorical_accuracy: {}, possible_positives: {}".format(*metrics))
 
 if __name__ == '__main__':
     main()
